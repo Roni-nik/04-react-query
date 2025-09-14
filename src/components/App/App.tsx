@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import styles from "./App.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 import fetchMovies from "../../services/movieService";
@@ -10,11 +11,25 @@ import MovieModal from "../MovieModal/MovieModal";
 import MovieGrid from "../MovieGrid/MovieGrid";
 
 export default function App() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  // const [movies, setMovies] = useState<Movie[]>([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [isError, setIsError] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+
+
+  const [movieQuery, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); 
+
+ const {data, isLoading, isError} = useQuery({
+    queryKey: ["movie", movieQuery, currentPage],
+   queryFn: () => fetchMovies(movieQuery),
+   enabled: movieQuery !== "";
+})
+
+ const handleSearch = (newTopic: string) => {
+     
+   }
 
   const openModal = (movie: Movie) => {
     setSelectedMovie(movie);
@@ -28,10 +43,10 @@ export default function App() {
     return;
   }
 
-  const handleSearch = async (value: string) => {
-    setMovies([]);
-    setIsLoading(true);
-    setIsError(false);
+  // const handleSearch = async (value: string) => {
+  //   setMovies([]);
+  //   setIsLoading(true);
+  //   setIsError(false);
 
     try {
       const newMovie = await fetchMovies(value);
