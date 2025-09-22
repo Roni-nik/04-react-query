@@ -21,7 +21,7 @@ export default async function fetchMovies(
 
   const response = await axios.get<MovieSearchResponse>(`/search/movie`, {
     headers: {
-      Authorization: myKey,
+      Authorization: `Bearer ${myKey}`,
     },
     params: {
       query,
