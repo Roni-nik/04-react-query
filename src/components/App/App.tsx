@@ -76,6 +76,7 @@ useEffect(() => {
       {isSuccess && <MovieGrid movies={data.results} onSelect={openModal} />}
 
       {isError && <ErrorMessage />}
+      
       <Toaster />
     </div>
   );
