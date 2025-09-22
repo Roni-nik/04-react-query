@@ -17,7 +17,7 @@ export default async function fetchMovies(
   query: string,
   page: number
 ): Promise<MovieSearchResponse> {
-  const myKey = import.meta.env.VITE_API_KEY;
+  const myKey = import.meta.env.VITE_TMDB_API_KEY;
 
   const response = await axios.get<MovieSearchResponse>(`/search/movie`, {
     headers: {
